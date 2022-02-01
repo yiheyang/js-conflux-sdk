@@ -25,5 +25,5 @@
   * [Wallet](docs/api/Wallet.md)
   * [utils](docs/api/utils.md)
   * [Misc](docs/api/misc.md)
-* [Release notes](change_log.md)
+* [Release notes](CHANGELOG.md)
 * [v2.0 Changes](docs/v2.0_changes.md)

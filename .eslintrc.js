@@ -1,41 +1,128 @@
+const ignoreNames = ['Window', '__dirname', '__filename', '[A-Z][a-z]+Actions','cfx_.+']
+const ignoreFilter = {
+  regex: `^(${ignoreNames.join('|')})$`,
+  match: false,
+}
+
 module.exports = {
   env: {
-    commonjs: true,
-    es6: true,
-    node: true,
-    jest: true,
+    browser: true,
+    es2021: true,
   },
-  extends: 'airbnb-base',
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
-    BigInt: true,
-    // for wechat miniprogram
-    wx: true,
-  },
+  root: true,
+  extends: [
+    'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
+  ],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 12,
+    sourceType: 'module',
   },
+  plugins: ['@typescript-eslint', 'prettier'],
   rules: {
-    'arrow-parens': ['error', 'as-needed'],
-    'arrow-body-style': 0, // for readable lambda
-    'class-methods-use-this': 0,
-    'func-names': 0, // for function without name
-    'function-paren-newline': 0, // for readable arguments
-    'linebreak-style': 0, // for windows and mac
-    'max-classes-per-file': 0,
-    'max-len': 0, // for jsdoc
-    'no-await-in-loop': 0, // for loop request
-    'no-else-return': 0,
-    'no-param-reassign': 0, // for merge default Value
-    'no-restricted-syntax': 0, // for `for(... of ...)`
-    'no-underscore-dangle': 0, // for private attribute
-    'no-use-before-define': 0, // for recursive parse
-    'object-curly-newline': 0, // for object in one line
-    'object-property-newline': 0, // for long object keys
-    'operator-linebreak': 0, // for `'string' +\n`
-    'prefer-destructuring': 0,
-    'quote-props': 0, // for string key
-    'yoda': 0, // for `min < number && number < max`
+    'import/first': 'off',
+    'import/no-commonjs': 'off',
+    // 通用规范开始
+    '@typescript-eslint/naming-convention': [
+      'warn',
+      {
+        selector: 'default',
+        format: ['camelCase'],
+        filter: ignoreFilter,
+      },
+      {
+        selector: 'variable',
+        format: ['camelCase', 'UPPER_CASE', 'PascalCase'],
+        filter: ignoreFilter,
+      },
+      {
+        selector: 'function',
+        format: ['camelCase', 'PascalCase'],
+        filter: ignoreFilter,
+      },
+      {
+        selector: 'parameter',
+        format: ['camelCase', 'PascalCase'],
+        leadingUnderscore: 'allow',
+        filter: ignoreFilter,
+      },
+      {
+        selector: 'memberLike',
+        modifiers: ['private'],
+        format: ['camelCase'],
+        leadingUnderscore: 'allow',
+        filter: ignoreFilter,
+      },
+      {
+        selector: 'typeLike',
+        format: ['PascalCase'],
+        filter: ignoreFilter,
+      },
+      {
+        selector: 'objectLiteralProperty',
+        format: ['camelCase', 'UPPER_CASE', 'PascalCase', 'snake_case'],
+        leadingUnderscore: 'allow',
+        filter: ignoreFilter,
+      },
+      {
+        selector: 'typeProperty',
+        format: ['camelCase', 'UPPER_CASE', 'PascalCase', 'snake_case'],
+        leadingUnderscore: 'allow',
+        filter: ignoreFilter,
+      },
+      {
+        selector: 'enumMember',
+        format: ['PascalCase', 'camelCase'],
+        filter: ignoreFilter,
+      },
+      {
+        selector: 'interface',
+        format: ['PascalCase'],
+        filter: {
+          regex: `^(${ignoreNames.join('|')})$`,
+          match: false,
+        },
+        custom: {
+          regex: '^I[A-Z]',
+          match: true,
+        },
+      },
+    ], // 强制各类命名规范
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-explicit-any': [
+      'warn',
+      {
+        fixToUnknown: false,
+        ignoreRestArgs: true,
+      },
+    ], // 禁止使用除了...args之外的any 并修复为unknown
+    '@typescript-eslint/semi': ['error', 'never'],
+    'spaced-comment': [
+      'error',
+      'always',
+      {
+        line: {
+          markers: ['/'],
+          exceptions: ['-', '+'],
+        },
+        block: {
+          markers: ['!'],
+          exceptions: ['*'],
+          balanced: true,
+        },
+      },
+    ], // 强制注释规范
+    'no-console': 'off', // 禁止控制台输出
+    '@typescript-eslint/explicit-member-accessibility': ['off'], // 强制规范类成员访问修饰符
+    '@typescript-eslint/no-var-requires': 'off',
   },
-};
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+}

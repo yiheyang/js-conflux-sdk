@@ -17,7 +17,7 @@ It’s commonly found in decentralized apps (dapps) to help with sending transac
 
 * [Quickstart](quick_start.md)
 * [Overview](overview.md)
-* [Changelog](../change_log.md)
+* [Changelog](../CHANGELOG.md)
 * [js-sdk examples](https://github.com/conflux-fans/js-sdk-example)
 
 ## Guides
